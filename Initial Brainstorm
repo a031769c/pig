@@ -1,0 +1,21 @@
+Welcome to Patch's Information Gatherer (Standalone Version)
+
+usage	pig -options
+
+Please enter a number to display the following information:
+
+1.	Hardware information 			2.	Operating System Information
+3.	?? 								4.	??
+5.	Network Adaptors				6.	Current Network Connections
+7.	Running Processes				8.	Current User Information
+9.	?? 								10.	???
+
+Hardware Information
+
+Device Name ['string']
+Arch [x86, x86_64, ARM, MIPS, SPARC]
+CPU Name, Speed, Number of Cores, Hyperthreaded [Y/N], Virtualisation Capable [Y/N]
+Total Amound of RAM
+Make / Model information?
+Up Time?
+
