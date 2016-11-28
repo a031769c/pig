@@ -1,23 +1,23 @@
 import platform
 
 def osx_ver():
-	# v0.1 initial solution
-	# evaluates the first string within "mac_ver" [0], looking for 'fully qualified'
-	# version number (periods are important to avoid false positives), then 'beautifies' it.
-	# TO DO: tested and proven on Yosemite, need to test on other versions where possible.
-	if "10.6." in platform.mac_ver()[0]:
+	# v0.1.1 initial solution (minor revision: trailing dots on version numbers removed as no risk of false positives
+	# evaluates the first string within "mac_ver" [0], looking for version number then 'beautifies' the string for output.
+	# TO DO: tested and proven on Yosemite, El Capitan & Sierra. Need to test on Mavericks & older if possible.
+	if "10.6" in platform.mac_ver()[0]:
 		Version = "OS X Snow Leopard "+platform.mac_ver()[0]
-	elif "10.7." in platform.mac_ver()[0]:
+	elif "10.7" in platform.mac_ver()[0]:
 		Version = "OS X Lion "+platform.mac_ver()[0]
-	elif "10.8." in platform.mac_ver()[0]:
+	elif "10.8" in platform.mac_ver()[0]:
 		Version = "OS X Mountain Lion "+platform.mac_ver()[0]
-	elif "10.9." in platform.mac_ver()[0]:
+	elif "10.9" in platform.mac_ver()[0]:
 		Version = "OS X Mavericks "+platform.mac_ver()[0]
-	elif "10.10." in platform.mac_ver()[0]:
+	elif "10.10" in platform.mac_ver()[0]:
 		Version = "OS X Yosemite "+platform.mac_ver()[0]
-	elif "10.11." in platform.mac_ver()[0]:
+	elif "10.11" in platform.mac_ver()[0]:
 		Version = "OS X El Capitan "+platform.mac_ver()[0]
-	elif "10.12." in platform.mac_ver()[0]:
+	elif "10.12" in platform.mac_ver()[0]:
+		# trailing full stop(s) removed as not a 10.12.1 version currently, this is unlikely to create ambiguity with later releases.
 		Version = "macOS Sierra "+platform.mac_ver()[0]
 	return Version
 	print Version
