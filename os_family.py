@@ -4,7 +4,7 @@ def os_family():
 	# v 0.1 initial solution
 	# Evaluates the returned string and 'beautifies' (Darwin <---> Apple Family)
 	# it before presenting it the next round of modules
-	# TO DO: Other BSDs, Mobile Operating Systems (Android?), error (OpenIndiana)
+	# TO DO: Other BSDs, OpenIndiana?
 	if platform.system() == "Darwin":
 		Family = "Apple"
 	elif platform.system() == "SunOS":
@@ -16,4 +16,3 @@ def os_family():
 	elif platform.system() == "FreeBSD":
 		Family = "FreeBSD"
 	return Family
-	print Family

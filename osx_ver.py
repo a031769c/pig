@@ -21,4 +21,3 @@ def osx_ver():
 		# this is unlikely to create ambiguity with either older or newer/future releases.
 		Version = "macOS Sierra "+platform.mac_ver()[0]
 	return Version
-	print Version

@@ -7,4 +7,3 @@ def sol_ver():
 	if platform.system() == "SunOS":
 		Version = "Solaris "+platform.version()
 	return Version
-	print Version
