@@ -1,5 +1,8 @@
+
 import platform
 import socket
+import uuid
+import json
 
 def hostname():
     hostname = socket.gethostname()
@@ -20,6 +23,38 @@ def os_family():
     else:
         Family = "Unknown"
     return Family
+
+# def config_path():
+#    ?????
+#    windows
+
+def check_config():
+    try: read_config = open("/tmp/pig.config","r")
+    except IOError:
+        print "No configuration present"
+        UUID = str(repr(uuid.uuid1())).split("'")[1]
+        HOST = raw_input("Enter the IPv4 address of the central server e.g 192.168.1.1\n\n")
+        write_config = open("/tmp/pig.config","w")
+        write_config.write('# SERVER IP''\n')
+        write_config.write(HOST+'\n')
+        write_config.write("# UUID"'\n')
+        write_config.write(UUID+'\n')
+        write_config.close()
+    else:
+        UUID = read_config.readlines()[3]
+        read_config.seek(0)
+        HOST = read_config.readlines()[1]
+
+def server_ip():
+    config=open("/tmp/pig.config","r")
+    HOST = config.readlines()[1].split('\n')[0]
+    return HOST
+
+def unique_id():
+    config = open("/tmp/pig.config","r")
+    UUID = config.readlines()[3]
+    UUID = UUID.split("\n")[0]
+    return UUID
 
 def osx_ver():
     if "10.6." in platform.mac_ver()[0]:
@@ -153,6 +188,9 @@ def win_lnx_arch():
 
 # TO DO: bsd_arch()
 
+check_config()
+
+UUID = unique_id()
 HOSTNAME = hostname()
 OS_FAMILY = os_family()
 
@@ -181,17 +219,15 @@ elif OS_FAMILY == "Windows":
 #    CPU_NAME = bsd_cpu()
 #    ARCH = bsd_arch()
 
-output = {"HOST":HOSTNAME,"OS":OS_VERSION,"CPU":CPU_NAME,"ARCH":ARCH}
-import json
+output = {"UUID":UUID,"HOST":HOSTNAME,"OS":OS_VERSION,"CPU":CPU_NAME,"ARCH":ARCH}
 json_output = json.dumps(output,ensure_ascii=False)
 json_output = json_output.encode("utf-8")
-# HOST = raw_input("Enter the IPv4 address of the central server e.g 192.168.1.1\n\n")
-HOST = "192.168.2.16"
-# Currently a hard coded server IP
+print json_output
+
+HOST = server_ip()
 PORT = 9001
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect((HOST,PORT))
 s.send(json_output)
-print repr(json_output)
 
