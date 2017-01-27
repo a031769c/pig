@@ -24,36 +24,51 @@ def os_family():
         Family = "Unknown"
     return Family
 
-# def config_path():
-#    ?????
-#    windows
-
 def check_config():
-    try: read_config = open("/tmp/pig.config","r")
-    except IOError:
-        print "No configuration present"
-        UUID = str(repr(uuid.uuid1())).split("'")[1]
-        HOST = raw_input("Enter the IPv4 address of the central server e.g 192.168.1.1\n\n")
-        write_config = open("/tmp/pig.config","w")
-        write_config.write('# SERVER IP''\n')
-        write_config.write(HOST+'\n')
-        write_config.write("# UUID"'\n')
-        write_config.write(UUID+'\n')
-        write_config.close()
+    if OS_FAMILY == "Windows":
+        try:
+            read_config = open('C:\\ProgramData\\pig.config','r')
+        except IOError:
+            print "No configuration present"
+            UUID = str(repr(uuid.uuid1())).split("'")[1]
+            HOST = raw_input("Enter the IPv4 address of the central server e.g 192.168.1.1\n\n")
+            write_config = open('C:\\ProgramData\\pig.config','w')
+            write_config.write('# SERVER IP''\n')
+            write_config.write(HOST+'\n')
+            write_config.write("# UUID"'\n')
+            write_config.write(UUID+'\n')
+            write_config.close()
     else:
-        UUID = read_config.readlines()[3]
-        read_config.seek(0)
-        HOST = read_config.readlines()[1]
+        try:
+            read_config = open("/tmp/pig.config","r")
+        except IOError:
+            print "No configuration present"
+            UUID = str(repr(uuid.uuid1())).split("'")[1]
+            HOST = raw_input("Enter the IPv4 address of the central server e.g 192.168.1.1\n\n")
+            write_config = open("/tmp/pig.config","w")
+            write_config.write('# SERVER IP''\n')
+            write_config.write(HOST+'\n')
+            write_config.write("# UUID"'\n')
+            write_config.write(UUID+'\n')
+            write_config.close()
 
 def server_ip():
-    config=open("/tmp/pig.config","r")
+    if OS_FAMILY == "Windows":
+        config = open('C:\\ProgramData\\pig.config','r')
+    else:
+        config = open("/tmp/pig.config","r")
     HOST = config.readlines()[1].split('\n')[0]
     return HOST
 
 def unique_id():
-    config = open("/tmp/pig.config","r")
-    UUID = config.readlines()[3]
-    UUID = UUID.split("\n")[0]
+    if OS_FAMILY == "Windows":
+        config = open('C:\\ProgramData\\pig.config','r')
+        UUID = config.readlines()[3]
+        UUID = UUID.split("\n")[0]
+    else:
+        config = open("/tmp/pig.config","r")
+        UUID = config.readlines()[3]
+        UUID = UUID.split("\n")[0]
     return UUID
 
 def osx_ver():
@@ -188,11 +203,12 @@ def win_lnx_arch():
 
 # TO DO: bsd_arch()
 
+HOSTNAME = hostname()
+OS_FAMILY = os_family()
+
 check_config()
 
 UUID = unique_id()
-HOSTNAME = hostname()
-OS_FAMILY = os_family()
 
 if OS_FAMILY == "Apple":
     import subprocess
